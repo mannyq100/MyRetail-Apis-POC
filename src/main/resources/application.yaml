@@ -1,0 +1,29 @@
+
+spring:
+  profiles:
+    active: local
+
+---
+spring:
+  config:
+    activate:
+      on-profile:
+        - local
+  data:
+    mongodb:
+      host: 127.0.0.1
+      port: 27017
+      database: local
+
+redSkyServer:
+  url: https://redsky-uat.perf.target.com/redsky_aggregations/v1/redsky/case_study_v1
+  key: 3yUxt7WltYG7MFKPp7uyELi1K40ad2ys
+
+logging:
+  level:
+    root: INFO
+
+
+server:
+  error:
+    include-message: always
