@@ -40,7 +40,7 @@ On startup, application is configured to load 4 default products into the databa
 -	13264003
 -	12954218
 
-###Api documentation:
+### Api documentation:
 Swagger documentation is available at http://localhost:8080/swagger-ui.html
 
 ### Security:
