@@ -65,7 +65,7 @@ public class ProductService {
 
         return productRepository.findById(productId).
                 switchIfEmpty(Mono.error(new ProductNotFoundException("Product with Id: " + productId + " does not exist. Update not possible"))).flatMap(product -> {
-            product.setName(productRequest.getName());
+           // product.setName(productRequest.getName());
             product.setCurrent_price(productRequest.getCurrent_price());
             return productRepository.save(product);
         });
