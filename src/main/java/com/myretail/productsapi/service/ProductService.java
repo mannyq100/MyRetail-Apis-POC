@@ -6,7 +6,6 @@ import com.myretail.productsapi.domain.productDescription.*;
 import com.myretail.productsapi.exception.ProductNotFoundException;
 import com.myretail.productsapi.repo.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -23,13 +22,14 @@ public class ProductService {
     RedSkyClient redSkyClient;
 
     @Autowired
-    public ProductService(ProductRepository productRepository, RedSkyClient redSkyClient) {
+    public ProductService(ProductRepository productRepository,
+                          RedSkyClient redSkyClient) {
         this.productRepository = productRepository;
         this.redSkyClient = redSkyClient;
     }
 
     public Flux<Product> addProducts(List<Product> products) {
-        log.info("In product Service. Adding products to database {}",products);
+        log.info("In product Service. Adding products to database {}", products);
         return productRepository.saveAll(products);
     }
 
@@ -65,10 +65,10 @@ public class ProductService {
 
         return productRepository.findById(productId).
                 switchIfEmpty(Mono.error(new ProductNotFoundException("Product with Id: " + productId + " does not exist. Update not possible"))).flatMap(product -> {
-                    product.setName(productRequest.getName());
-                    product.setCurrent_price(productRequest.getCurrent_price());
-                    return productRepository.save(product);
-                });
+            product.setName(productRequest.getName());
+            product.setCurrent_price(productRequest.getCurrent_price());
+            return productRepository.save(product);
+        });
     }
 
 

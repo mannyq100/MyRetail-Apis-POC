@@ -6,16 +6,10 @@ import com.myretail.productsapi.domain.PriceCurrency;
 import com.myretail.productsapi.domain.Product;
 import com.myretail.productsapi.domain.productDescription.ProductInfoResponse;
 import com.myretail.productsapi.repo.ProductRepository;
-import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Lookup;
-import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
-import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.client.AutoConfigureWebClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -32,7 +26,6 @@ import java.util.List;
 import static org.mockito.BDDMockito.given;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ImportAutoConfiguration(exclude = EmbeddedMongoAutoConfiguration.class)
 @ActiveProfiles("test")
 @AutoConfigureWebClient
 @TestPropertySource(properties = {
@@ -76,12 +69,12 @@ import static org.mockito.BDDMockito.given;
                 .bodyValue(Arrays.asList(product))
                 .exchange()
                 .expectStatus()
-                .isOk()
+                .isCreated()
                 .expectBody(Product[].class)
                 .consumeWith(productEntityExchangeResult -> {
-                    Product[] responseBody = productEntityExchangeResult.getResponseBody();
-                    assert responseBody != null;
-                //    assert responseBody[0].getId().equals("28374937");
+                   var responseBody = productEntityExchangeResult.getResponseBody();
+                   assert responseBody != null;
+                    assert responseBody[0].getId().equals("28374937");
                 });
     }
 

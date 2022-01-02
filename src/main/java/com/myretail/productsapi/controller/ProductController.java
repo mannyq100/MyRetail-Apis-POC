@@ -2,11 +2,12 @@ package com.myretail.productsapi.controller;
 
 import com.myretail.productsapi.domain.Product;
 import com.myretail.productsapi.service.ProductService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/v1/products")
-@RequiredArgsConstructor
+@Validated
 public class ProductController {
 
     ProductService productService;
@@ -34,10 +35,10 @@ public class ProductController {
     }
 
     @PostMapping("/addProduct")
-    public Mono<List<ResponseEntity<Product>>> addProducts(@RequestBody @Valid List<Product> products) {
+    public ResponseEntity<Flux<Product>> addProducts(@RequestBody List<@Valid Product> products) {
 
-        return productService.addProducts(products)
-            .map(productSaved -> ResponseEntity.status(HttpStatus.CREATED).body(productSaved)).collectList();
+        Flux<Product> productFlux = productService.addProducts(products);
+            return ResponseEntity.status(HttpStatus.CREATED).body(productFlux);
     }
 
     @GetMapping("/{id}")

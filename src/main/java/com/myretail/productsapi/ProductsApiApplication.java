@@ -28,7 +28,6 @@ public class ProductsApiApplication {
     CommandLineRunner run(ProductService productService) {
         log.info("Saving initial products to database [{},{},{},{}]", 13860428, 54456119, 13264003, 12954218);
         return args -> {
-            Thread.sleep(1000);
             List<Product> productList = List.of(
                     Product.builder().id("13860428").name("a").current_price(new PriceCurrency(100, "USD")).build(),
                     Product.builder().id("54456119").name("b").current_price(new PriceCurrency(200, "USD")).build(),
