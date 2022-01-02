@@ -15,4 +15,49 @@ https://redsky-uat.perf.target.com/redsky_aggregations/v1/redsky/case_study_v1?k
 
 <hr>
 
-project documentation to be added here......
+### Technology Stack
+- Java 11
+- SpringBoot and Spring Webflux
+- Gradle
+- Mongodb
+
+### To Run Application
+This application can be run in any Java IDE or using Gradle :
+- `./gradlew clean build`
+- `./gradlew bootRun`
+
+It runs on the default port 8080. <br>
+A connection to mongodb is required for the application to start. 
+Connection properties is available under resources/application.yaml.
+
+Alternatively, mongodb can be run locally using docker
+- `docker run --name mongodb -d -p 27017:27017 mongo`
+
+### On Application Start
+On startup, application is configured to load 4 default products into the database for testing. ProductIds loaded are
+-	13860428
+-	54456119
+-	13264003
+-	12954218
+
+###Api documentation:
+Swagger documentation is available at http://localhost:8080/swagger-ui.html
+
+### Security:
+Spring security is leveraged to secure the api endpoints. <br>
+Two users are configured internally.
+-	Normal User`(username: user, password: password)`: can retrieve product
+-	Admin User `(username: admin, password: password)`: can retrieve product and update product price
+
+### Additional Features implemented:
+- `Spring webflux` and `reactive-mongo` libraries leveraged for reactive/non-blocking programming.
+- `Validation` for user request’s body and `error handling`.
+- Up to 3 `retries` for calls to external api using backoff when server error recieved.
+- `Integration tests` for api endpoints under project test folder.
+- An endpoint to add product price to database.
+
+
+
+
+
+
