@@ -33,7 +33,9 @@ public class ProductController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Price updated"),
             @ApiResponse(responseCode = "400", description = "productIds mismatch"),
+            @ApiResponse(responseCode = "403", description = "Unauthorized. Admin access required to update price"),
             @ApiResponse(responseCode = "404", description = "Product Not Found to be updated")
+
     })
     public Mono<ResponseEntity<Product>> updateProduct(@RequestBody @Valid Product productRequest, @PathVariable(name = "id") String productId) {
         if (!productId.equalsIgnoreCase(productRequest.getId())) {
