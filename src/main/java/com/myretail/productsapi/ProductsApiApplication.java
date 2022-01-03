@@ -29,10 +29,10 @@ public class ProductsApiApplication {
         log.info("Saving initial products to database [{},{},{},{}]", 13860428, 54456119, 13264003, 12954218);
         return args -> {
             List<Product> productList = List.of(
-                    Product.builder().id("13860428").name("a").current_price(new PriceCurrency(100, "USD")).build(),
-                    Product.builder().id("54456119").name("b").current_price(new PriceCurrency(200, "USD")).build(),
-                    Product.builder().id("13264003").name("c").current_price(new PriceCurrency(300, "USD")).build(),
-                    Product.builder().id("12954218").name("d").current_price(new PriceCurrency(400, "USD")).build()
+                    Product.builder().id("13860428").current_price(new PriceCurrency(100, "USD")).build(),
+                    Product.builder().id("54456119").current_price(new PriceCurrency(200, "USD")).build(),
+                    Product.builder().id("13264003").current_price(new PriceCurrency(300, "USD")).build(),
+                    Product.builder().id("12954218").current_price(new PriceCurrency(400, "USD")).build()
             );
             productService.addProducts(productList).blockLast();
         };
